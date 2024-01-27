@@ -17,8 +17,6 @@ class Solution {
         for(int i = 0; i< m; i++){
             for(int j = 0; j< n; j++){
 
-                // System.out.println(text1.charAt(i) +"="+ text2.charAt(j));
-
                 if(text1.charAt(i) == text2.charAt(j)){
                     dp[i+1][j+1] = dp[i][j] + 1;
                 }
