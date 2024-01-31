@@ -1,4 +1,6 @@
 class Solution {
+
+    // can be optimsed without DP
     public String longestPalindrome(String s) {
 
         String[] dp = new String[s.length()];
