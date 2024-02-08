@@ -1,5 +1,4 @@
-package org.example.lab3;
-
+import java.util.Objects;
 import java.util.Scanner;
 
 public class WordConnector {
@@ -8,41 +7,56 @@ public class WordConnector {
 
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("Enter words : ");
         String words = sc.nextLine();
 
-        String[] wordsArr = words.split("\\|");
-        boolean[] isAdded = new boolean[wordsArr.length];
+        String[] wordArr = words.split("\\|");
 
-        StringBuilder output = new StringBuilder();
-        output.append(" ").append(wordsArr[0]);
+        boolean[] isAdded = new boolean[wordArr.length];
+
         isAdded[0] = true;
 
-        char[] charArr = wordsArr[0].toLowerCase().toCharArray();
-        char lastChar = charArr[charArr.length-1];
+        String result = helper(wordArr[0], wordArr, isAdded);
 
-
-        // hello|david|orange|eye|Edward
-
-        connect(wordsArr, lastChar, output, isAdded);
-
-        System.out.println("Output : "+ output);
+        System.out.println("output : " + result);
 
     }
 
-    public static void connect(String[] wordsArr, char lastChar, StringBuilder output, boolean[] isAdded){
+    public static String helper(String firstWord, String[] wordArr, boolean[] isAdded){
 
-        for(String word : wordsArr){
-            for(int i = 1; i< wordsArr.length; i++){
+        StringBuilder stringBuilder = new StringBuilder();
 
-                if(lastChar == wordsArr[i].toLowerCase().toCharArray()[0] && !isAdded[i]){
-                    output.append(" ").append(wordsArr[i]);
-                    isAdded[i] = true;
+        for(int i = 0; i< wordArr.length; i++){
+            if(firstWord.toLowerCase().charAt(firstWord.length()-1) == wordArr[i].toLowerCase().charAt(0) && !isAdded[i]){
 
+                isAdded[i] = true;
+                String temp = helper(wordArr[i], wordArr, isAdded);
 
-                    connect(wordsArr, wordsArr[i].charAt(wordsArr[i].length() - 1), output, isAdded);
+                if(temp.equals("-1")){
+                    isAdded[i] = false;
                 }
+                else{
+                    return stringBuilder.append(firstWord).append(" ").append(temp).toString();
+                }
+
             }
         }
 
+        if(checkIfAllUsed(isAdded)){
+            return stringBuilder.append(firstWord).toString();
+        }else{
+            return "-1";
+        }
+
+    }
+
+    public static boolean checkIfAllUsed(boolean[] isAdded){
+
+        for(boolean x : isAdded) {
+            if (!x) {
+                return false;
+            }
+        }
+        return true;
     }
 }
