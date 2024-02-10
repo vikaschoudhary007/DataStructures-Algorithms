@@ -48,7 +48,7 @@ public class Graph101 {
         graph.put("g", new ArrayList<>(Arrays.asList("f")));
 
 
-        System.out.println("Adjacency List Representation : ");
+        System.out.println("Adjacency List Representation: ");
         for(Map.Entry<String, List<String>> node : graph.entrySet()){
             String key = node.getKey();
             List<String> values = node.getValue();
